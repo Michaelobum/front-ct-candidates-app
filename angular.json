@@ -7,9 +7,10 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "inlineTemplate": true,
           "inlineStyle": true,
-          "skipTests": true
+          "skipTests": true,
+          "standalone": true,
+          "style": "node_modules/bootstrap/dist/css/bootstrap.min.css"
         },
         "@schematics/angular:class": {
           "skipTests": true
@@ -100,5 +101,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "e75ea67a-24c1-40a5-ab2b-ec9fc3d086da"
   }
 }
