@@ -1,45 +1,16 @@
-<!-- task-list.component.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h2>Lista de Tareas</h2>
-<div>
-<table>
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Descripción</th>
-      <th>Estado</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let task of tasks">
-      <td>{{task.name}}</td>
-      <td>{{task.description}}</td>
-      <td>{{task.status}}</td>
-      <td>
-        <div>
-          <button (click)="updateTask(task)">Editar</button>
-        </div>
-      </td>
+<input
+  [placeholder]="'Task Name'"
+  [formControl]="inputName"
+/>
 
-      <td>
-        <div>
-          <button class="btn btn-danger">Eliminar</button>
-        </div>
-        <div>
-          <button (click)="deleteTask(task)">Confirmar</button>
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="buttons">
+  <button (click)="addTask()">Add Task</button>  
+  <button (click)="deleteAllTasks()">Delete All Tasks</button>
 </div>
-</body>
-</html>
+<ul>
+  <li *ngFor="let task of allTasks">
+    <input type="checkbox" [checked]="isTaskStatusCompleted(task.status)"  (click)="toggleTaskStatus(task)"  />
+    <span [ngClass]="{ task_completed: isTaskStatusCompleted(task.status) }">{{ task.name }}</span>
+    <button (click)="deleteTask(task)"> x </button>
+  </li>
+</ul>

@@ -10,7 +10,7 @@
           "inlineStyle": true,
           "skipTests": true,
           "standalone": true,
-          "style": "node_modules/bootstrap/dist/css/bootstrap.min.css"
+          "style": "none"
         },
         "@schematics/angular:class": {
           "skipTests": true
