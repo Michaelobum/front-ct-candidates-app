@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from '@angular/common/http';
+import { Injectable, OnInit } from "@angular/core";
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Task } from "../models/Task";
 import { Observable } from "rxjs";
 import { catchError, tap } from 'rxjs/operators';
@@ -7,7 +7,7 @@ import { catchError, tap } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
-export class TaskService {
+export class TaskService  {
     private apiUrl = 'http://localhost:8000/api/tasks';
     constructor(private http: HttpClient) {}
     getById(id: number) {
@@ -37,4 +37,21 @@ export class TaskService {
     getAll(): Observable<Task[]> {
         return this.http.get<Task[]>(this.apiUrl);
     }
+    getTasks(completed?: boolean, sortField?: string, sortOrder?: string): Observable<any[]> {
+        let params = new HttpParams();
+    
+        if (completed !== undefined) {
+          params = params.set('completed', completed.toString());
+        }
+    
+        if (sortField) {
+          params = params.set('sort_field', sortField);
+        }
+    
+        if (sortOrder) {
+          params = params.set('sort_order', sortOrder);
+        }
+    
+        return this.http.get<any[]>(this.apiUrl, { params });
+      }
 }

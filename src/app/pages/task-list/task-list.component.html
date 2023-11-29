@@ -1,16 +1,65 @@
-<input
-  [placeholder]="'Task Name'"
-  [formControl]="inputName"
-/>
-
-<div class="buttons">
-  <button (click)="addTask()">Add Task</button>  
-  <button (click)="deleteAllTasks()">Delete All Tasks</button>
+<div class="list-wrapper">
+  <div class="card mx-auto" style="width: 50%; height: auto;">
+    <div class="card-body">
+      <div class="add-items d-flex">
+        <input
+          class="form-control todo-list-input"
+          [placeholder]="'Task Name'"
+          [formControl]="inputName"
+        />
+        <input
+          class="form-control todo-list-input"
+          [placeholder]="'Order Name'"
+          [formControl]="orderTask"
+        />
+        <button class="add btn btn-primary font-weight-bold todo-list-add-btn" (click)="addTask()">Add Task</button>
+      </div>
+      <div class="add-items d-flex">
+        <input
+        class="form-control todo-list-input"
+        placeholder="Search tasks"
+        [(ngModel)]="searchTerm"
+      />
+      </div>
+      <div class="filters mt-3">
+        <label class="form-check-label">
+          Completadas
+          <input type="checkbox" [checked]="completedFilter" (change)="toggleCompletedFilter($event)" />
+        </label>
+      </div>
+      <table class="table mt-3">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Task</th>
+            <th>Order</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of filterTasks()">
+            <td>
+              <div class="form-check-label">
+                <input type="checkbox" [checked]="isTaskStatusCompleted(task.status)" (click)="toggleTaskStatus(task)" id="taskCheckbox_{{ task.id }}" />
+                <label class="form-check-label" [for]="'taskCheckbox_' + task.id"></label>
+              </div>
+            </td>
+            <td>
+              <span [ngClass]="{ task_completed: isTaskStatusCompleted(task.status) }">{{ task.name }}</span>
+            </td>
+            <td>
+              <span [ngClass]="{ task_completed: isTaskStatusCompleted(task.status) }">{{ task.order }}</span>
+            </td>
+            <td>
+              <span [ngClass]="{ task_completed: isTaskStatusCompleted(task.status) }">{{ task.status }}</span>
+            </td>
+            <td>
+              <button class="btn btn-danger" (click)="confirmDeleteTask(task)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
-<ul>
-  <li *ngFor="let task of allTasks">
-    <input type="checkbox" [checked]="isTaskStatusCompleted(task.status)"  (click)="toggleTaskStatus(task)"  />
-    <span [ngClass]="{ task_completed: isTaskStatusCompleted(task.status) }">{{ task.name }}</span>
-    <button (click)="deleteTask(task)"> x </button>
-  </li>
-</ul>
