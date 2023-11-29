@@ -26,6 +26,7 @@ export class TaskListComponent implements OnInit {
   ngOnInit(): void {
     this.taskForm = new FormGroup({
       inputName: new FormControl(""),
+      orderTask: new FormControl(""),
     });
   }
 
@@ -91,7 +92,6 @@ export class TaskListComponent implements OnInit {
       status: TaskStatus.PENDING,
       active: true,
     };
-
 
     this.taskService.create(task).subscribe((createdTask) => {
       this.tasks.push(createdTask);
